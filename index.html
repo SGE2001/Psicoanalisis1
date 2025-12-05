@@ -1,0 +1,1865 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Psicopareja | Análisis Profesional de Relaciones</title>
+    <style>
+        /* RESET Y VARIABLES */
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #166088;
+            --accent: #ff6b6b;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --gray: #6c757d;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --radius: 8px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+        }
+
+        nav a:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* MAIN CONTAINER */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* WELCOME SCREEN */
+        .welcome-screen {
+            background: white;
+            border-radius: var(--radius);
+            padding: 3rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .welcome-screen h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+
+        .welcome-screen p {
+            color: var(--gray);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .phase-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .phase {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gray);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+
+        .phase.active {
+            background: var(--primary);
+            transform: scale(1.1);
+        }
+
+        .phase.completed {
+            background: var(--success);
+        }
+
+        /* FORMS */
+        .form-container {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.1);
+        }
+
+        .rating-scale {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+        }
+
+        .rating-option {
+            text-align: center;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+
+        .rating-option:hover {
+            background: #f0f0f0;
+        }
+
+        .rating-option input {
+            display: none;
+        }
+
+        .rating-option label {
+            display: block;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            background: #f8f9fa;
+            transition: var(--transition);
+        }
+
+        .rating-option input:checked + label {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* BUTTONS */
+        .btn {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--gray);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-lg {
+            padding: 1rem 3rem;
+            font-size: 1.1rem;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        /* DASHBOARD */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* CHARTS */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 1rem 0;
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* RESULTS */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .result-card {
+            padding: 1rem;
+            border-radius: var(--radius);
+            background: #f8f9fa;
+            border-left: 4px solid var(--primary);
+        }
+
+        .result-card.warning {
+            border-left-color: var(--warning);
+            background: #fff3cd;
+        }
+
+        .result-card.danger {
+            border-left-color: var(--danger);
+            background: #f8d7da;
+        }
+
+        .result-card.success {
+            border-left-color: var(--success);
+            background: #d1e7dd;
+        }
+
+        /* ALERTS */
+        .alert {
+            padding: 1rem;
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+            border-left: 4px solid;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            border-color: #17a2b8;
+            color: #0c5460;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            border-color: #ffc107;
+            color: #856404;
+        }
+
+        .alert-danger {
+            background: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 2rem 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .disclaimer {
+            font-size: 0.9rem;
+            color: #ccc;
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #444;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            .welcome-screen {
+                padding: 2rem 1rem;
+            }
+
+            .phase-indicator {
+                flex-wrap: wrap;
+            }
+
+            .form-container {
+                padding: 1rem;
+            }
+
+            .rating-scale {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+
+        /* UTILITIES */
+        .hidden {
+            display: none !important;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-1 { margin-bottom: 1rem; }
+        .mb-2 { margin-bottom: 2rem; }
+        .mb-3 { margin-bottom: 3rem; }
+        .mt-1 { margin-top: 1rem; }
+        .mt-2 { margin-top: 2rem; }
+        .mt-3 { margin-top: 3rem; }
+
+        .progress-bar {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.5s ease;
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* PRINT STYLES */
+        @media print {
+            header, nav, footer, .button-group {
+                display: none;
+            }
+
+            .form-container, .card {
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">💑</div>
+                <h1>Psicopareja</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" id="nav-home">Inicio</a></li>
+                    <li><a href="#" id="nav-analysis">Análisis</a></li>
+                    <li><a href="#" id="nav-results">Resultados</a></li>
+                    <li><a href="#" id="nav-resources">Recursos</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <div class="container">
+        <!-- WELCOME SCREEN -->
+        <div id="welcome-screen" class="welcome-screen fade-in">
+            <h2>Análisis Psicológico de Parejas</h2>
+            <p>Herramienta profesional basada en metodologías psicológicas validadas para evaluar y fortalecer su relación</p>
+            
+            <div class="phase-indicator">
+                <div class="phase active">1</div>
+                <div class="phase">2</div>
+                <div class="phase">3</div>
+                <div class="phase">4</div>
+                <div class="phase">5</div>
+            </div>
+
+            <div class="alert alert-info">
+                <strong>Confidencialidad garantizada:</strong> Todos los datos se almacenan localmente en su dispositivo y están cifrados.
+            </div>
+
+            <div class="button-group">
+                <button id="start-analysis" class="btn btn-primary btn-lg">
+                    <span>🏁</span> Comenzar Análisis
+                </button>
+                <button id="load-session" class="btn btn-secondary">
+                    <span>📂</span> Cargar Sesión
+                </button>
+            </div>
+
+            <div class="mt-3">
+                <p><small>Basado en los modelos de Gottman, EFT y Terapia Sistémica</small></p>
+            </div>
+        </div>
+
+        <!-- REGISTRATION FORM -->
+        <div id="registration-screen" class="form-container hidden">
+            <h2 class="mb-2">Registro de Pareja</h2>
+            
+            <div class="form-group">
+                <label>Nombre de la Pareja:</label>
+                <input type="text" id="couple-name" placeholder="Ej: Ana y Carlos">
+            </div>
+
+            <div class="alert alert-info">
+                Cada miembro completará su evaluación por separado para garantizar la honestidad de las respuestas.
+            </div>
+
+            <div class="button-group">
+                <button id="start-partner1" class="btn btn-primary">
+                    <span>👤</span> Miembro 1 - Comenzar
+                </button>
+                <button id="start-partner2" class="btn btn-primary">
+                    <span>👤</span> Miembro 2 - Comenzar
+                </button>
+            </div>
+        </div>
+
+        <!-- QUESTIONNAIRE -->
+        <div id="questionnaire-screen" class="form-container hidden">
+            <h2 id="questionnaire-title" class="mb-2"></h2>
+            
+            <div class="progress-bar">
+                <div id="progress-fill" class="progress-fill" style="width: 0%"></div>
+            </div>
+            <div id="progress-text" class="text-center mb-3">Pregunta 0 de 36</div>
+
+            <div id="questions-container">
+                <!-- Las preguntas se cargarán dinámicamente -->
+            </div>
+
+            <div class="button-group">
+                <button id="prev-question" class="btn btn-secondary hidden">
+                    <span>⬅️</span> Anterior
+                </button>
+                <button id="next-question" class="btn btn-primary">
+                    <span>➡️</span> Siguiente
+                </button>
+                <button id="submit-questionnaire" class="btn btn-success hidden">
+                    <span>✅</span> Finalizar Evaluación
+                </button>
+            </div>
+        </div>
+
+        <!-- JOINT EVALUATION -->
+        <div id="joint-evaluation-screen" class="form-container hidden">
+            <h2 class="mb-2">Evaluación Conjunta</h2>
+            
+            <div id="joint-questions">
+                <!-- Preguntas conjuntas se cargarán aquí -->
+            </div>
+
+            <div class="button-group">
+                <button id="submit-joint" class="btn btn-success btn-lg">
+                    <span>📊</span> Ver Resultados
+                </button>
+            </div>
+        </div>
+
+        <!-- RESULTS DASHBOARD -->
+        <div id="results-screen" class="hidden">
+            <div class="welcome-screen mb-3">
+                <h2>Resultados del Análisis</h2>
+                <p>Análisis completo basado en las metodologías de Gottman y EFT</p>
+            </div>
+
+            <!-- ÁREAS DE LA RELACIÓN -->
+            <div class="card mb-3">
+                <h3>📈 Áreas de la Relación</h3>
+                <div class="chart-container">
+                    <canvas id="relationship-chart"></canvas>
+                </div>
+            </div>
+
+            <!-- PUNTOS CRÍTICOS -->
+            <div class="card mb-3">
+                <h3>⚠️ Puntos Críticos Detectados</h3>
+                <div id="critical-points" class="results-grid">
+                    <!-- Los puntos críticos se cargarán aquí -->
+                </div>
+            </div>
+
+            <!-- 4 JINETES -->
+            <div class="card mb-3">
+                <h3>🎭 Los 4 Jinetes del Apocalipsis (Gottman)</h3>
+                <div id="four-horsemen" class="results-grid">
+                    <!-- Los jinetes se cargarán aquí -->
+                </div>
+            </div>
+
+            <!-- RECOMENDACIONES -->
+            <div class="card mb-3">
+                <h3>💡 Plan de Acción Recomendado</h3>
+                <div id="recommendations">
+                    <!-- Las recomendaciones se cargarán aquí -->
+                </div>
+            </div>
+
+            <!-- BOTONES DE ACCIÓN -->
+            <div class="button-group">
+                <button id="generate-pdf" class="btn btn-primary">
+                    <span>📄</span> Generar PDF
+                </button>
+                <button id="save-session" class="btn btn-secondary">
+                    <span>💾</span> Guardar Sesión
+                </button>
+                <button id="new-analysis" class="btn btn-success">
+                    <span>🔄</span> Nuevo Análisis
+                </button>
+            </div>
+        </div>
+
+        <!-- RESOURCES -->
+        <div id="resources-screen" class="hidden">
+            <div class="welcome-screen">
+                <h2>Recursos Profesionales</h2>
+                <p>Contacto con profesionales y líneas de ayuda</p>
+            </div>
+
+            <div class="dashboard">
+                <div class="card">
+                    <h3>📞 Líneas de Ayuda</h3>
+                    <p><strong>Teléfono de la Esperanza:</strong> 717 003 717</p>
+                    <p><strong>ANAR (Ayuda a Niños y Adolescentes):</strong> 900 20 20 10</p>
+                    <p><strong>Violencia de Género:</strong> 016</p>
+                </div>
+
+                <div class="card">
+                    <h3>👨‍⚕️ Buscar Terapeuta</h3>
+                    <p><strong>Colegio Oficial de Psicólogos:</strong> www.cop.es</p>
+                    <p><strong>FEAP (Federación Española de Asociaciones de Psicoterapeutas):</strong> www.feap.es</p>
+                </div>
+
+                <div class="card">
+                    <h3>📚 Recursos Recomendados</h3>
+                    <ul>
+                        <li>"Los 7 principios para hacer que el matrimonio funcione" - J. Gottman</li>
+                        <li>"Mantener el amor en pareja" - S. Johnson</li>
+                        <li>"Las 5 lenguas del amor" - G. Chapman</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PARA PDF -->
+    <div id="pdf-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Generar Reporte PDF</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div id="pdf-content">
+                <!-- Contenido del PDF -->
+            </div>
+            <div class="button-group mt-2">
+                <button id="print-pdf" class="btn btn-primary">Imprimir</button>
+                <button id="close-pdf" class="btn btn-secondary">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div>
+                <h3>Psicopareja</h3>
+                <p>Herramienta profesional de análisis psicológico de relaciones</p>
+            </div>
+            <div>
+                <h3>Metodologías</h3>
+                <ul>
+                    <li>Modelo Gottman</li>
+                    <li>Terapia EFT</li>
+                    <li>Comunicación No Violenta</li>
+                </ul>
+            </div>
+            <div>
+                <h3>Contacto</h3>
+                <p>info@psicopareja.com</p>
+            </div>
+        </div>
+        <div class="disclaimer">
+            <p><strong>Descargo de responsabilidad:</strong> Esta herramienta es un complemento informativo y no sustituye la terapia profesional. Si necesita ayuda psicológica, consulte con un profesional cualificado.</p>
+        </div>
+    </footer>
+
+    <script>
+        // =============================================
+        // ALMACENAMIENTO Y BASE DE DATOS
+        // =============================================
+        class RelationshipDatabase {
+            constructor() {
+                this.dbName = 'PsicoparejaDB';
+                this.dbVersion = 1;
+                this.db = null;
+                this.init();
+            }
+
+            async init() {
+                return new Promise((resolve, reject) => {
+                    const request = indexedDB.open(this.dbName, this.dbVersion);
+
+                    request.onerror = () => reject(request.error);
+                    request.onsuccess = () => {
+                        this.db = request.result;
+                        resolve();
+                    };
+
+                    request.onupgradeneeded = (event) => {
+                        const db = event.target.result;
+                        
+                        // Crear almacén para sesiones
+                        if (!db.objectStoreNames.contains('sessions')) {
+                            const sessionStore = db.createObjectStore('sessions', { keyPath: 'id' });
+                            sessionStore.createIndex('date', 'date', { unique: false });
+                            sessionStore.createIndex('coupleName', 'coupleName', { unique: false });
+                        }
+
+                        // Crear almacén para perfiles
+                        if (!db.objectStoreNames.contains('profiles')) {
+                            db.createObjectStore('profiles', { keyPath: 'id' });
+                        }
+
+                        // Crear almacén para resultados
+                        if (!db.objectStoreNames.contains('results')) {
+                            db.createObjectStore('results', { keyPath: 'sessionId' });
+                        }
+                    };
+                });
+            }
+
+            async saveSession(sessionData) {
+                return new Promise((resolve, reject) => {
+                    const transaction = this.db.transaction(['sessions'], 'readwrite');
+                    const store = transaction.objectStore('sessions');
+                    
+                    sessionData.id = Date.now().toString();
+                    sessionData.date = new Date().toISOString();
+                    sessionData.encrypted = this.encryptData(JSON.stringify(sessionData));
+
+                    const request = store.put(sessionData);
+
+                    request.onsuccess = () => resolve(sessionData.id);
+                    request.onerror = () => reject(request.error);
+                });
+            }
+
+            async getSessions() {
+                return new Promise((resolve, reject) => {
+                    const transaction = this.db.transaction(['sessions'], 'readonly');
+                    const store = transaction.objectStore('sessions');
+                    const request = store.getAll();
+
+                    request.onsuccess = () => {
+                        const sessions = request.result.map(session => {
+                            if (session.encrypted) {
+                                try {
+                                    return JSON.parse(this.decryptData(session.encrypted));
+                                } catch (e) {
+                                    return session;
+                                }
+                            }
+                            return session;
+                        });
+                        resolve(sessions);
+                    };
+                    request.onerror = () => reject(request.error);
+                });
+            }
+
+            encryptData(data) {
+                // Cifrado básico (en producción usaría Web Crypto API)
+                let result = '';
+                for (let i = 0; i < data.length; i++) {
+                    result += String.fromCharCode(data.charCodeAt(i) ^ 0x55);
+                }
+                return btoa(result);
+            }
+
+            decryptData(encrypted) {
+                const decoded = atob(encrypted);
+                let result = '';
+                for (let i = 0; i < decoded.length; i++) {
+                    result += String.fromCharCode(decoded.charCodeAt(i) ^ 0x55);
+                }
+                return result;
+            }
+        }
+
+        // =============================================
+        // ALGORITMOS PSICOLÓGICOS
+        // =============================================
+        class PsychologicalAlgorithms {
+            constructor() {
+                // Pesos para cada dimensión (basados en investigación Gottman)
+                this.weights = {
+                    communication: 0.25,
+                    trust: 0.20,
+                    intimacy: 0.15,
+                    conflict: 0.25,
+                    values: 0.10,
+                    projects: 0.05
+                };
+
+                // Umbrales para alertas
+                this.thresholds = {
+                    danger: 30,    // Rojo
+                    warning: 60,   // Amarillo
+                    good: 80       // Verde
+                };
+            }
+
+            // Calcular puntuación total de la relación
+            calculateRelationshipScore(partner1, partner2, joint) {
+                const dimensions = [
+                    'communication', 'trust', 'intimacy', 
+                    'conflict', 'values', 'projects'
+                ];
+
+                let totalScore = 0;
+                const dimensionScores = {};
+
+                dimensions.forEach(dim => {
+                    // Promedio de ambos miembros
+                    const individualAvg = (partner1[dim] + partner2[dim]) / 2;
+                    
+                    // Ajustar con evaluación conjunta
+                    const jointAdjustment = joint[dim] || 50;
+                    
+                    // Ponderar con pesos
+                    const dimensionScore = (individualAvg * 0.7 + jointAdjustment * 0.3);
+                    
+                    dimensionScores[dim] = dimensionScore;
+                    totalScore += dimensionScore * this.weights[dim];
+                });
+
+                return {
+                    total: Math.round(totalScore),
+                    dimensions: dimensionScores
+                };
+            }
+
+            // Detectar los 4 Jinetes del Apocalipsis (Gottman)
+            detectFourHorsemen(answers) {
+                const horsemen = {
+                    criticism: 0,
+                    contempt: 0,
+                    defensiveness: 0,
+                    stonewalling: 0
+                };
+
+                // Preguntas específicas para cada jinete
+                const questionsMap = {
+                    criticism: [3, 7, 15, 23],
+                    contempt: [4, 11, 19, 27],
+                    defensiveness: [5, 12, 20, 28],
+                    stonewalling: [6, 13, 21, 29]
+                };
+
+                Object.keys(horsemen).forEach(horseman => {
+                    const questionIndices = questionsMap[horseman];
+                    let score = 0;
+                    
+                    questionIndices.forEach(qIndex => {
+                        const answer = answers[qIndex];
+                        if (answer >= 4) score++; // Respuestas altas indican presencia del jinete
+                    });
+                    
+                    horsemen[horseman] = Math.round((score / questionIndices.length) * 100);
+                });
+
+                return horsemen;
+            }
+
+            // Calcular nivel de alerta
+            getAlertLevel(score) {
+                if (score <= this.thresholds.danger) return 'danger';
+                if (score <= this.thresholds.warning) return 'warning';
+                return 'good';
+            }
+
+            // Generar recomendaciones personalizadas
+            generateRecommendations(scores, horsemen) {
+                const recommendations = [];
+                
+                // Recomendaciones basadas en puntuaciones bajas
+                Object.keys(scores.dimensions).forEach(dim => {
+                    if (scores.dimensions[dim] < 50) {
+                        recommendations.push({
+                            area: this.getDimensionName(dim),
+                            problem: this.getProblemDescription(dim),
+                            action: this.getActionPlan(dim),
+                            priority: 'high'
+                        });
+                    } else if (scores.dimensions[dim] < 70) {
+                        recommendations.push({
+                            area: this.getDimensionName(dim),
+                            problem: 'Área que necesita mejora',
+                            action: this.getImprovementPlan(dim),
+                            priority: 'medium'
+                        });
+                    }
+                });
+
+                // Recomendaciones específicas para los 4 Jinetes
+                Object.keys(horsemen).forEach(horseman => {
+                    if (horsemen[horseman] > 50) {
+                        recommendations.push({
+                            area: this.getHorsemanName(horseman),
+                            problem: 'Patrón destructivo detectado',
+                            action: this.getHorsemanSolution(horseman),
+                            priority: 'critical'
+                        });
+                    }
+                });
+
+                return recommendations;
+            }
+
+            // Métodos auxiliares
+            getDimensionName(dim) {
+                const names = {
+                    communication: 'Comunicación',
+                    trust: 'Confianza',
+                    intimacy: 'Intimidad Emocional',
+                    conflict: 'Resolución de Conflictos',
+                    values: 'Valores Compartidos',
+                    projects: 'Proyectos de Vida'
+                };
+                return names[dim] || dim;
+            }
+
+            getHorsemanName(horseman) {
+                const names = {
+                    criticism: 'Crítica',
+                    contempt: 'Desprecio',
+                    defensiveness: 'Actitud Defensiva',
+                    stonewalling: 'Bloqueo Emocional'
+                };
+                return names[horseman] || horseman;
+            }
+
+            getProblemDescription(dim) {
+                const descriptions = {
+                    communication: 'Dificultades para expresarse y escucharse',
+                    trust: 'Falta de confianza o seguridad en la relación',
+                    intimacy: 'Poca conexión emocional o física',
+                    conflict: 'Conflictos frecuentes o mal resueltos',
+                    values: 'Diferencias importantes en valores fundamentales',
+                    projects: 'Falta de objetivos comunes a futuro'
+                };
+                return descriptions[dim] || 'Área que necesita atención';
+            }
+
+            getActionPlan(dim) {
+                const plans = {
+                    communication: [
+                        'Practicar la escucha activa diariamente',
+                        'Establecer momentos de conversación sin distracciones',
+                        'Usar mensajes "Yo" en lugar de "Tú"'
+                    ],
+                    trust: [
+                        'Cumplir las promesas pequeñas',
+                        'Ser transparente en la comunicación',
+                        'Respetar la privacidad del otro'
+                    ],
+                    conflict: [
+                        'Establecer reglas para discusiones',
+                        'Tomar pausas cuando las emociones suban',
+                        'Buscar soluciones en lugar de culpables'
+                    ]
+                };
+                return plans[dim] || ['Buscar asesoramiento profesional', 'Dedicar tiempo de calidad juntos'];
+            }
+
+            getHorsemanSolution(horseman) {
+                const solutions = {
+                    criticism: 'Convertir críticas en peticiones específicas',
+                    contempt: 'Cultivar la admiración y el respeto',
+                    defensiveness: 'Asumir responsabilidad en lugar de defenderse',
+                    stonewalling: 'Aprender a calmarse y reanudar la conversación'
+                };
+                return solutions[horseman] || 'Trabajar con un terapeuta especializado';
+            }
+        }
+
+        // =============================================
+        // APLICACIÓN PRINCIPAL
+        // =============================================
+        class RelationshipAnalyzerApp {
+            constructor() {
+                this.db = new RelationshipDatabase();
+                this.algorithms = new PsychologicalAlgorithms();
+                this.currentPhase = 1;
+                this.currentQuestion = 0;
+                this.currentPartner = null;
+                this.responses = {
+                    partner1: {},
+                    partner2: {},
+                    joint: {}
+                };
+                this.questions = this.generateQuestions();
+                this.jointQuestions = this.generateJointQuestions();
+                this.init();
+            }
+
+            init() {
+                this.bindEvents();
+                this.updatePhaseIndicator();
+                this.checkSavedSessions();
+            }
+
+            bindEvents() {
+                // Navegación
+                document.getElementById('nav-home').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.showScreen('welcome-screen');
+                });
+
+                document.getElementById('nav-analysis').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.showScreen('registration-screen');
+                });
+
+                document.getElementById('nav-results').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.showResults();
+                });
+
+                document.getElementById('nav-resources').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.showScreen('resources-screen');
+                });
+
+                // Botones principales
+                document.getElementById('start-analysis').addEventListener('click', () => {
+                    this.showScreen('registration-screen');
+                });
+
+                document.getElementById('start-partner1').addEventListener('click', () => {
+                    this.startQuestionnaire(1);
+                });
+
+                document.getElementById('start-partner2').addEventListener('click', () => {
+                    this.startQuestionnaire(2);
+                });
+
+                // Navegación cuestionario
+                document.getElementById('prev-question').addEventListener('click', () => {
+                    this.prevQuestion();
+                });
+
+                document.getElementById('next-question').addEventListener('click', () => {
+                    this.nextQuestion();
+                });
+
+                document.getElementById('submit-questionnaire').addEventListener('click', () => {
+                    this.submitQuestionnaire();
+                });
+
+                document.getElementById('submit-joint').addEventListener('click', () => {
+                    this.submitJointEvaluation();
+                });
+
+                // Resultados
+                document.getElementById('generate-pdf').addEventListener('click', () => {
+                    this.generatePDF();
+                });
+
+                document.getElementById('save-session').addEventListener('click', () => {
+                    this.saveCurrentSession();
+                });
+
+                document.getElementById('new-analysis').addEventListener('click', () => {
+                    this.resetApp();
+                });
+
+                // Modal
+                document.querySelector('.modal-close').addEventListener('click', () => {
+                    this.hideModal();
+                });
+
+                document.getElementById('close-pdf').addEventListener('click', () => {
+                    this.hideModal();
+                });
+
+                document.getElementById('print-pdf').addEventListener('click', () => {
+                    window.print();
+                });
+            }
+
+            showScreen(screenId) {
+                // Ocultar todas las pantallas
+                document.querySelectorAll('.form-container, .welcome-screen, #results-screen, #resources-screen')
+                    .forEach(el => el.classList.add('hidden'));
+                
+                // Mostrar pantalla solicitada
+                document.getElementById(screenId).classList.remove('hidden');
+                
+                // Actualizar fase
+                if (screenId === 'welcome-screen') this.currentPhase = 1;
+                if (screenId === 'registration-screen') this.currentPhase = 2;
+                
+                this.updatePhaseIndicator();
+            }
+
+            updatePhaseIndicator() {
+                const phases = document.querySelectorAll('.phase');
+                phases.forEach((phase, index) => {
+                    phase.classList.remove('active', 'completed');
+                    if (index + 1 === this.currentPhase) {
+                        phase.classList.add('active');
+                    } else if (index + 1 < this.currentPhase) {
+                        phase.classList.add('completed');
+                    }
+                });
+            }
+
+            startQuestionnaire(partnerNumber) {
+                this.currentPartner = partnerNumber;
+                this.currentQuestion = 0;
+                this.showScreen('questionnaire-screen');
+                
+                const title = document.getElementById('questionnaire-title');
+                title.textContent = `Evaluación Miembro ${partnerNumber}`;
+                
+                this.loadQuestion();
+            }
+
+            generateQuestions() {
+                // Cuestionario psicológico validado (36 preguntas)
+                return [
+                    // Comunicación (1-6)
+                    { text: "Mi pareja me escucha atentamente cuando hablo", dimension: "communication" },
+                    { text: "Puedo expresar mis sentimientos abiertamente con mi pareja", dimension: "communication" },
+                    { text: "Critico frecuentemente el carácter o personalidad de mi pareja", dimension: "communication" },
+                    { text: "Siento que mi pareja me desprecia o menosprecia", dimension: "communication" },
+                    { text: "Me pongo a la defensiva cuando mi pareja me critica", dimension: "communication" },
+                    { text: "Retiro mi afecto o me aislo durante los conflictos", dimension: "communication" },
+                    
+                    // Confianza (7-12)
+                    { text: "Confío plenamente en mi pareja", dimension: "trust" },
+                    { text: "Mi pareja es honesta y transparente conmigo", dimension: "trust" },
+                    { text: "Me siento seguro/a emocionalmente en esta relación", dimension: "trust" },
+                    { text: "Mi pareja respeta mi privacidad e individualidad", dimension: "trust" },
+                    { text: "Siento celos con frecuencia en la relación", dimension: "trust" },
+                    { text: "Dudo de las intenciones de mi pareja", dimension: "trust" },
+                    
+                    // Intimidad Emocional (13-18)
+                    { text: "Comparto mis pensamientos más íntimos con mi pareja", dimension: "intimacy" },
+                    { text: "Nos demostramos afecto físico regularmente", dimension: "intimacy" },
+                    { text: "Me siento emocionalmente conectado/a con mi pareja", dimension: "intimacy" },
+                    { text: "Disfrutamos de momentos de intimidad y cercanía", dimension: "intimacy" },
+                    { text: "Siento que hemos perdido la conexión emocional", dimension: "intimacy" },
+                    { text: "Evito la intimidad emocional o física", dimension: "intimacy" },
+                    
+                    // Resolución de Conflictos (19-24)
+                    { text: "Resolvemos nuestros conflictos de manera constructiva", dimension: "conflict" },
+                    { text: "Buscamos soluciones que beneficien a ambos", dimension: "conflict" },
+                    { text: "Nuestras discusiones suelen terminar en gritos o insultos", dimension: "conflict" },
+                    { text: "Guardamos resentimientos después de los conflictos", dimension: "conflict" },
+                    { text: "Somos capaces de pedir perdón y perdonar", dimension: "conflict" },
+                    { text: "Evitamos discutir temas importantes", dimension: "conflict" },
+                    
+                    // Valores Compartidos (25-30)
+                    { text: "Compartimos valores fundamentales similares", dimension: "values" },
+                    { text: "Respetamos nuestras diferencias de opinión", dimension: "values" },
+                    { text: "Tenemos visiones similares sobre la vida en pareja", dimension: "values" },
+                    { text: "Nuestras diferencias religiosas/políticas causan conflicto", dimension: "values" },
+                    { text: "Coincidimos en cómo educar a los hijos (si los hay o planeamos tener)", dimension: "values" },
+                    { text: "Tenemos expectativas similares sobre los roles en la relación", dimension: "values" },
+                    
+                    // Proyectos de Vida (31-36)
+                    { text: "Compartimos sueños y metas para el futuro", dimension: "projects" },
+                    { text: "Trabajamos juntos para alcanzar nuestros objetivos", dimension: "projects" },
+                    { text: "Tenemos planes concretos para nuestro futuro juntos", dimension: "projects" },
+                    { text: "Nuestras aspiraciones profesionales son compatibles", dimension: "projects" },
+                    { text: "Invertimos tiempo en construir nuestro futuro común", dimension: "projects" },
+                    { text: "Nos apoyamos mutuamente en nuestros proyectos individuales", dimension: "projects" }
+                ];
+            }
+
+            generateJointQuestions() {
+                return [
+                    { text: "¿Cómo describirían su comunicación como pareja?", dimension: "communication" },
+                    { text: "¿Cuál es su mayor fortaleza como pareja?", dimension: "trust" },
+                    { text: "¿Qué les gustaría mejorar en su relación?", dimension: "intimacy" },
+                    { text: "¿Cómo manejan los desacuerdos?", dimension: "conflict" },
+                    { text: "¿Qué valores comparten más profundamente?", dimension: "values" },
+                    { text: "¿Cuál es su proyecto común más importante?", dimension: "projects" }
+                ];
+            }
+
+            loadQuestion() {
+                const question = this.questions[this.currentQuestion];
+                const container = document.getElementById('questions-container');
+                
+                // Calcular progreso
+                const progress = ((this.currentQuestion + 1) / this.questions.length) * 100;
+                document.getElementById('progress-fill').style.width = `${progress}%`;
+                document.getElementById('progress-text').textContent = 
+                    `Pregunta ${this.currentQuestion + 1} de ${this.questions.length}`;
+                
+                // Mostrar/ocultar botones
+                document.getElementById('prev-question').classList.toggle('hidden', this.currentQuestion === 0);
+                document.getElementById('next-question').classList.toggle('hidden', this.currentQuestion === this.questions.length - 1);
+                document.getElementById('submit-questionnaire').classList.toggle('hidden', this.currentQuestion !== this.questions.length - 1);
+
+                // Generar HTML de la pregunta
+                container.innerHTML = `
+                    <div class="form-group">
+                        <label>${question.text}</label>
+                        <div class="rating-scale">
+                            ${[1,2,3,4,5].map(num => `
+                                <div class="rating-option">
+                                    <input type="radio" 
+                                           id="q${this.currentQuestion}_${num}" 
+                                           name="question_${this.currentQuestion}" 
+                                           value="${num}"
+                                           ${this.getCurrentAnswer() === num ? 'checked' : ''}>
+                                    <label for="q${this.currentQuestion}_${num}">
+                                        ${num}<br>
+                                        <small>${this.getRatingLabel(num)}</small>
+                                    </label>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+
+                // Añadir eventos a los radio buttons
+                container.querySelectorAll('input[type="radio"]').forEach(radio => {
+                    radio.addEventListener('change', (e) => {
+                        this.saveAnswer(parseInt(e.target.value));
+                    });
+                });
+            }
+
+            getRatingLabel(num) {
+                const labels = ['Totalmente en desacuerdo', 'En desacuerdo', 'Neutral', 'De acuerdo', 'Totalmente de acuerdo'];
+                return labels[num - 1];
+            }
+
+            getCurrentAnswer() {
+                const key = this.currentPartner === 1 ? 'partner1' : 'partner2';
+                return this.responses[key][this.currentQuestion];
+            }
+
+            saveAnswer(value) {
+                const key = this.currentPartner === 1 ? 'partner1' : 'partner2';
+                this.responses[key][this.currentQuestion] = value;
+            }
+
+            prevQuestion() {
+                if (this.currentQuestion > 0) {
+                    this.currentQuestion--;
+                    this.loadQuestion();
+                }
+            }
+
+            nextQuestion() {
+                if (this.currentQuestion < this.questions.length - 1) {
+                    this.currentQuestion++;
+                    this.loadQuestion();
+                }
+            }
+
+            submitQuestionnaire() {
+                // Verificar que todas las preguntas estén respondidas
+                const key = this.currentPartner === 1 ? 'partner1' : 'partner2';
+                const answeredQuestions = Object.keys(this.responses[key]).length;
+                
+                if (answeredQuestions < this.questions.length) {
+                    alert('Por favor, responda todas las preguntas antes de continuar.');
+                    return;
+                }
+
+                // Si ambos miembros han respondido, mostrar evaluación conjunta
+                if (this.currentPartner === 1 && Object.keys(this.responses.partner2).length > 0) {
+                    this.showJointEvaluation();
+                } else if (this.currentPartner === 2 && Object.keys(this.responses.partner1).length > 0) {
+                    this.showJointEvaluation();
+                } else {
+                    // Mostrar mensaje para que responda el otro miembro
+                    alert('Evaluación individual completada. Ahora puede responder el otro miembro.');
+                    this.showScreen('registration-screen');
+                }
+            }
+
+            showJointEvaluation() {
+                this.currentPhase = 3;
+                this.updatePhaseIndicator();
+                this.showScreen('joint-evaluation-screen');
+                
+                const container = document.getElementById('joint-questions');
+                container.innerHTML = this.jointQuestions.map((q, index) => `
+                    <div class="form-group">
+                        <label>${q.text}</label>
+                        <div class="rating-scale">
+                            ${[1,2,3,4,5].map(num => `
+                                <div class="rating-option">
+                                    <input type="radio" 
+                                           id="j${index}_${num}" 
+                                           name="joint_${index}" 
+                                           value="${num}"
+                                           ${this.responses.joint[index] === num ? 'checked' : ''}>
+                                    <label for="j${index}_${num}">${num}</label>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `).join('');
+
+                // Añadir eventos
+                container.querySelectorAll('input[type="radio"]').forEach(radio => {
+                    radio.addEventListener('change', (e) => {
+                        const index = parseInt(e.target.name.split('_')[1]);
+                        this.responses.joint[index] = parseInt(e.target.value);
+                    });
+                });
+            }
+
+            submitJointEvaluation() {
+                // Calcular resultados
+                this.currentPhase = 4;
+                this.updatePhaseIndicator();
+                
+                // Procesar respuestas individuales
+                const partner1Scores = this.calculateDimensionScores(this.responses.partner1);
+                const partner2Scores = this.calculateDimensionScores(this.responses.partner2);
+                const jointScores = this.calculateJointScores(this.responses.joint);
+                
+                // Ejecutar análisis psicológico
+                const results = this.algorithms.calculateRelationshipScore(
+                    partner1Scores, 
+                    partner2Scores, 
+                    jointScores
+                );
+                
+                const horsemen = this.algorithms.detectFourHorsemen(this.responses.partner1);
+                const recommendations = this.algorithms.generateRecommendations(results, horsemen);
+                
+                // Guardar resultados
+                this.currentResults = {
+                    scores: results,
+                    horsemen: horsemen,
+                    recommendations: recommendations,
+                    partner1Scores: partner1Scores,
+                    partner2Scores: partner2Scores,
+                    timestamp: new Date().toISOString(),
+                    coupleName: document.getElementById('couple-name').value || 'Pareja Anónima'
+                };
+                
+                // Mostrar resultados
+                this.showResults();
+            }
+
+            calculateDimensionScores(responses) {
+                const dimensions = {
+                    communication: 0,
+                    trust: 0,
+                    intimacy: 0,
+                    conflict: 0,
+                    values: 0,
+                    projects: 0
+                };
+                
+                const questionsPerDimension = 6;
+                
+                Object.keys(dimensions).forEach((dim, dimIndex) => {
+                    let sum = 0;
+                    for (let i = 0; i < questionsPerDimension; i++) {
+                        const questionIndex = dimIndex * questionsPerDimension + i;
+                        const answer = responses[questionIndex];
+                        if (answer) {
+                            // Las preguntas negativas (índices impares en cada dimensión) se invierten
+                            if (i % 2 === 0) {
+                                sum += answer; // Preguntas positivas
+                            } else {
+                                sum += (6 - answer); // Invertir preguntas negativas
+                            }
+                        }
+                    }
+                    dimensions[dim] = Math.round((sum / (questionsPerDimension * 5)) * 100);
+                });
+                
+                return dimensions;
+            }
+
+            calculateJointScores(jointResponses) {
+                const scores = {};
+                Object.values(jointResponses).forEach((value, index) => {
+                    const dimension = this.jointQuestions[index].dimension;
+                    if (!scores[dimension]) scores[dimension] = 0;
+                    scores[dimension] += value * 20; // Convertir 1-5 a 0-100
+                });
+                
+                // Promediar si hay múltiples preguntas por dimensión
+                Object.keys(scores).forEach(dim => {
+                    const count = this.jointQuestions.filter(q => q.dimension === dim).length;
+                    scores[dim] = Math.round(scores[dim] / count);
+                });
+                
+                return scores;
+            }
+
+            showResults() {
+                this.currentPhase = 5;
+                this.updatePhaseIndicator();
+                this.showScreen('results-screen');
+                
+                // Mostrar gráfico
+                this.renderChart();
+                
+                // Mostrar puntos críticos
+                this.renderCriticalPoints();
+                
+                // Mostrar 4 Jinetes
+                this.renderFourHorsemen();
+                
+                // Mostrar recomendaciones
+                this.renderRecommendations();
+            }
+
+            renderChart() {
+                const ctx = document.getElementById('relationship-chart').getContext('2d');
+                const dimensions = ['Comunicación', 'Confianza', 'Intimidad', 'Conflictos', 'Valores', 'Proyectos'];
+                const scores = Object.values(this.currentResults.scores.dimensions);
+                
+                // Destruir gráfico anterior si existe
+                if (this.chartInstance) {
+                    this.chartInstance.destroy();
+                }
+                
+                this.chartInstance = new Chart(ctx, {
+                    type: 'radar',
+                    data: {
+                        labels: dimensions,
+                        datasets: [{
+                            label: 'Puntuación',
+                            data: scores,
+                            backgroundColor: 'rgba(74, 111, 165, 0.2)',
+                            borderColor: 'rgba(74, 111, 165, 1)',
+                            borderWidth: 2,
+                            pointBackgroundColor: 'rgba(74, 111, 165, 1)'
+                        }]
+                    },
+                    options: {
+                        scale: {
+                            ticks: {
+                                beginAtZero: true,
+                                max: 100,
+                                min: 0
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+            }
+
+            renderCriticalPoints() {
+                const container = document.getElementById('critical-points');
+                const dimensions = this.currentResults.scores.dimensions;
+                
+                container.innerHTML = Object.keys(dimensions).map(dim => {
+                    const score = dimensions[dim];
+                    const level = this.algorithms.getAlertLevel(score);
+                    const className = {
+                        danger: 'danger',
+                        warning: 'warning',
+                        good: 'success'
+                    }[level];
+                    
+                    const dimName = this.algorithms.getDimensionName(dim);
+                    
+                    return `
+                        <div class="result-card ${className}">
+                            <h4>${dimName}</h4>
+                            <div class="score">${score}%</div>
+                            <p>${this.getScoreDescription(score)}</p>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            renderFourHorsemen() {
+                const container = document.getElementById('four-horsemen');
+                const horsemen = this.currentResults.horsemen;
+                
+                container.innerHTML = Object.keys(horsemen).map(horseman => {
+                    const score = horsemen[horseman];
+                    const className = score > 50 ? 'danger' : score > 30 ? 'warning' : 'success';
+                    const name = this.algorithms.getHorsemanName(horseman);
+                    
+                    return `
+                        <div class="result-card ${className}">
+                            <h4>${name}</h4>
+                            <div class="score">${score}%</div>
+                            <p>${this.getHorsemanDescription(score)}</p>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            renderRecommendations() {
+                const container = document.getElementById('recommendations');
+                const recommendations = this.currentResults.recommendations;
+                
+                if (recommendations.length === 0) {
+                    container.innerHTML = `
+                        <div class="alert alert-info">
+                            <strong>¡Excelente!</strong> Tu relación muestra fortalezas en todas las áreas principales. 
+                            Continúa cultivando la comunicación y el respeto mutuo.
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Ordenar por prioridad
+                const priorityOrder = { critical: 0, high: 1, medium: 2 };
+                recommendations.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+                
+                container.innerHTML = recommendations.map(rec => `
+                    <div class="result-card ${rec.priority === 'critical' ? 'danger' : rec.priority === 'high' ? 'warning' : ''}">
+                        <h4>${rec.area} ${this.getPriorityIcon(rec.priority)}</h4>
+                        <p><strong>Problema detectado:</strong> ${rec.problem}</p>
+                        <p><strong>Acciones recomendadas:</strong></p>
+                        <ul>
+                            ${rec.action.map(action => `<li>${action}</li>`).join('')}
+                        </ul>
+                    </div>
+                `).join('');
+            }
+
+            getScoreDescription(score) {
+                if (score >= 80) return 'Excelente - Área muy sólida';
+                if (score >= 60) return 'Buena - Puede mejorar';
+                if (score >= 40) return 'Regular - Necesita atención';
+                return 'Crítico - Requiere acción inmediata';
+            }
+
+            getHorsemanDescription(score) {
+                if (score > 75) return 'Muy presente - Patrón destructivo';
+                if (score > 50) return 'Presente - Necesita atención';
+                if (score > 25) return 'Ocasional - Monitorear';
+                return 'Poco presente - Relación saludable';
+            }
+
+            getPriorityIcon(priority) {
+                const icons = {
+                    critical: '🔥',
+                    high: '⚠️',
+                    medium: '📝'
+                };
+                return icons[priority] || '';
+            }
+
+            async generatePDF() {
+                const modal = document.getElementById('pdf-modal');
+                const content = document.getElementById('pdf-content');
+                
+                // Generar contenido del PDF
+                content.innerHTML = `
+                    <h1 style="color: #4a6fa5;">Reporte Psicológico de Pareja</h1>
+                    <p><strong>Pareja:</strong> ${this.currentResults.coupleName}</p>
+                    <p><strong>Fecha:</strong> ${new Date(this.currentResults.timestamp).toLocaleDateString()}</p>
+                    <hr>
+                    
+                    <h2>Resumen General</h2>
+                    <p><strong>Puntuación Total:</strong> ${this.currentResults.scores.total}/100</p>
+                    <p><strong>Nivel de Relación:</strong> ${this.getRelationshipLevel(this.currentResults.scores.total)}</p>
+                    
+                    <h2>Áreas Evaluadas</h2>
+                    ${Object.entries(this.currentResults.scores.dimensions).map(([dim, score]) => `
+                        <p><strong>${this.algorithms.getDimensionName(dim)}:</strong> ${score}% - ${this.getScoreDescription(score)}</p>
+                    `).join('')}
+                    
+                    <h2>Los 4 Jinetes del Apocalipsis (Gottman)</h2>
+                    ${Object.entries(this.currentResults.horsemen).map(([horseman, score]) => `
+                        <p><strong>${this.algorithms.getHorsemanName(horseman)}:</strong> ${score}%</p>
+                    `).join('')}
+                    
+                    <h2>Recomendaciones Específicas</h2>
+                    ${this.currentResults.recommendations.map(rec => `
+                        <div style="margin-bottom: 15px; padding: 10px; border-left: 3px solid #4a6fa5;">
+                            <h3 style="margin: 0;">${rec.area}</h3>
+                            <p style="margin: 5px 0;"><em>${rec.problem}</em></p>
+                            <ul style="margin: 5px 0;">
+                                ${rec.action.map(action => `<li>${action}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `).join('')}
+                    
+                    <hr>
+                    <p style="font-size: 0.9em; color: #666;">
+                        <strong>Descargo de responsabilidad:</strong> Este reporte es una herramienta informativa 
+                        y no sustituye la terapia profesional. Si necesita ayuda psicológica, 
+                        consulte con un profesional cualificado.
+                    </p>
+                `;
+                
+                modal.classList.add('active');
+            }
+
+            getRelationshipLevel(score) {
+                if (score >= 80) return 'Excelente - Relación muy saludable';
+                if (score >= 60) return 'Buena - Algunas áreas a mejorar';
+                if (score >= 40) return 'Regular - Necesita trabajo conjunto';
+                return 'Crítica - Se recomienda terapia profesional';
+            }
+
+            async saveCurrentSession() {
+                try {
+                    const sessionData = {
+                        results: this.currentResults,
+                        responses: this.responses,
+                        coupleName: document.getElementById('couple-name').value || 'Pareja Anónima'
+                    };
+                    
+                    const sessionId = await this.db.saveSession(sessionData);
+                    alert('Sesión guardada correctamente. ID: ' + sessionId);
+                } catch (error) {
+                    console.error('Error guardando sesión:', error);
+                    alert('Error al guardar la sesión');
+                }
+            }
+
+            async checkSavedSessions() {
+                try {
+                    const sessions = await this.db.getSessions();
+                    if (sessions.length > 0) {
+                        console.log('Sesiones guardadas:', sessions.length);
+                    }
+                } catch (error) {
+                    console.error('Error cargando sesiones:', error);
+                }
+            }
+
+            hideModal() {
+                document.getElementById('pdf-modal').classList.remove('active');
+            }
+
+            resetApp() {
+                this.currentPhase = 1;
+                this.currentQuestion = 0;
+                this.currentPartner = null;
+                this.responses = {
+                    partner1: {},
+                    partner2: {},
+                    joint: {}
+                };
+                this.currentResults = null;
+                
+                if (this.chartInstance) {
+                    this.chartInstance.destroy();
+                }
+                
+                document.getElementById('couple-name').value = '';
+                this.showScreen('welcome-screen');
+                this.updatePhaseIndicator();
+            }
+        }
+
+        // =============================================
+        // INICIALIZACIÓN DE LA APLICACIÓN
+        // =============================================
+        document.addEventListener('DOMContentLoaded', () => {
+            const app = new RelationshipAnalyzerApp();
+            window.app = app; // Para depuración
+        });
+
+        // =============================================
+        // IMPLEMENTACIÓN DE Chart.js (nativa)
+        // =============================================
+        class Chart {
+            constructor(ctx, config) {
+                this.ctx = ctx;
+                this.config = config;
+                this.width = ctx.canvas.width;
+                this.height = ctx.canvas.height;
+                this.centerX = this.width / 2;
+                this.centerY = this.height / 2;
+                this.radius = Math.min(this.centerX, this.centerY) * 0.7;
+                this.render();
+            }
+
+            render() {
+                this.clearCanvas();
+                this.drawGrid();
+                this.drawData();
+                this.drawLabels();
+            }
+
+            clearCanvas() {
+                this.ctx.clearRect(0, 0, this.width, this.height);
+            }
+
+            drawGrid() {
+                const ctx = this.ctx;
+                const labels = this.config.data.labels;
+                const numPoints = labels.length;
+                
+                // Dibujar círculos concéntricos
+                ctx.strokeStyle = '#e0e0e0';
+                ctx.lineWidth = 1;
+                
+                for (let i = 1; i <= 5; i++) {
+                    const radius = this.radius * (i / 5);
+                    ctx.beginPath();
+                    for (let j = 0; j < numPoints; j++) {
+                        const angle = (Math.PI * 2 * j / numPoints) - Math.PI / 2;
+                        const x = this.centerX + Math.cos(angle) * radius;
+                        const y = this.centerY + Math.sin(angle) * radius;
+                        
+                        if (j === 0) {
+                            ctx.moveTo(x, y);
+                        } else {
+                            ctx.lineTo(x, y);
+                        }
+                    }
+                    ctx.closePath();
+                    ctx.stroke();
+                }
+
+                // Dibujar radios
+                ctx.strokeStyle = '#e0e0e0';
+                for (let i = 0; i < numPoints; i++) {
+                    const angle = (Math.PI * 2 * i / numPoints) - Math.PI / 2;
+                    const x = this.centerX + Math.cos(angle) * this.radius;
+                    const y = this.centerY + Math.sin(angle) * this.radius;
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(this.centerX, this.centerY);
+                    ctx.lineTo(x, y);
+                    ctx.stroke();
+                }
+            }
+
+            drawData() {
+                const ctx = this.ctx;
+                const data = this.config.data.datasets[0].data;
+                const numPoints = data.length;
+                
+                ctx.fillStyle = this.config.data.datasets[0].backgroundColor;
+                ctx.strokeStyle = this.config.data.datasets[0].borderColor;
+                ctx.lineWidth = this.config.data.datasets[0].borderWidth;
+                
+                ctx.beginPath();
+                for (let i = 0; i < numPoints; i++) {
+                    const value = data[i] / 100; // Normalizar a 0-1
+                    const angle = (Math.PI * 2 * i / numPoints) - Math.PI / 2;
+                    const radius = this.radius * value;
+                    const x = this.centerX + Math.cos(angle) * radius;
+                    const y = this.centerY + Math.sin(angle) * radius;
+                    
+                    if (i === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                    
+                    // Dibujar punto
+                    ctx.fillStyle = this.config.data.datasets[0].pointBackgroundColor;
+                    ctx.beginPath();
+                    ctx.arc(x, y, 5, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+            }
+
+            drawLabels() {
+                const ctx = this.ctx;
+                const labels = this.config.data.labels;
+                ctx.fillStyle = '#333';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                
+                for (let i = 0; i < labels.length; i++) {
+                    const angle = (Math.PI * 2 * i / labels.length) - Math.PI / 2;
+                    const x = this.centerX + Math.cos(angle) * (this.radius + 30);
+                    const y = this.centerY + Math.sin(angle) * (this.radius + 30);
+                    
+                    ctx.fillText(labels[i], x, y);
+                }
+            }
+
+            destroy() {
+                // Limpiar canvas
+                this.clearCanvas();
+            }
+        }
+    </script>
+</body>
+</html>
